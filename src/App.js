@@ -1,8 +1,11 @@
 import "./App.css";
+import { Post } from "./components/Post/Post";
 
 function App() {
   return (
-    <div className="App">Здесь я буду учить реакт на других примерах!!!!!</div>
+    <div className="app_wrapper">
+      <Post />
+    </div>
   );
 }
 
