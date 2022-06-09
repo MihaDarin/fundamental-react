@@ -10,7 +10,7 @@ export const Post = (props) => {
         </strong>
         <div>{props.post.content}</div>
       </div>
-      <MyButton>Удалить</MyButton>
+      <MyButton onClick={() => props.remove(props.post)}>Удалить</MyButton>
     </div>
   );
 };
