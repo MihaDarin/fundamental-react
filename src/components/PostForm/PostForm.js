@@ -19,15 +19,15 @@ export const PostForm = ({ create }) => {
         onChange={(e) => setPost({ ...post, title: e.target.value })}
         value={post.title}
         type="text"
-        placeholder="Post Title"
+        placeholder="Заголовок"
       />
       <MyInput
         value={post.content}
         onChange={(e) => setPost({ ...post, content: e.target.value })}
         type="text"
-        placeholder="Post Text"
+        placeholder="Содержимое"
       />
-      <MyButton onClick={addNewPost}>Create Post</MyButton>
+      <MyButton onClick={addNewPost}>Создать пост</MyButton>
     </form>
   );
 };

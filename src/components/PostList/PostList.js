@@ -3,7 +3,7 @@ import React from "react";
 import { Post } from "../Post/Post";
 export const PostList = ({ posts, title, remove }) => {
   if (!posts.length) {
-    <h1 style={{ textAlign: "center" }}> Постов нет</h1>;
+    return <h1 style={{ textAlign: "center" }}> Постов нет</h1>;
   }
   return (
     <div>
