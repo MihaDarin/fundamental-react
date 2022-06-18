@@ -8,7 +8,7 @@ export const Post = (props) => {
         <strong>
           {props.number} {props.post.title}
         </strong>
-        <div>{props.post.content}</div>
+        <div>{props.post.body}</div>
       </div>
       <MyButton onClick={() => props.remove(props.post)}>Удалить</MyButton>
     </div>
