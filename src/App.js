@@ -10,7 +10,8 @@ import { PostList } from "./components/PostList/PostList";
 import { Loader } from "./components/UI/Loader/Loader";
 import { MyButton } from "./components/UI/MyButton/MyButton";
 import { MyModal } from "./components/UI/MyModal/MyModal";
-import { getPagesArray, getPagesCount } from "./utils/pages";
+import { Pagination } from "./components/UI/Pagination/Pagination";
+import { getPagesCount } from "./utils/pages";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -20,23 +21,32 @@ function App() {
   const [totalPages, setTotalPages] = useState(0);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
-  let pagesArray = getPagesArray(totalPages);
-  const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
-    const response = await PostService.getAll(limit, page);
-    setPosts(response.data);
-    const totalCount = response.headers["x-total-count"];
-    setTotalPages(getPagesCount(totalCount, limit));
-  });
+
+  const [fetchPosts, isPostsLoading, postError] = useFetching(
+    async (limit, page) => {
+      const response = await PostService.getAll(limit, page);
+      setPosts(response.data);
+      const totalCount = response.headers["x-total-count"];
+      setTotalPages(getPagesCount(totalCount, limit));
+    }
+  );
+
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(limit, page);
   }, []);
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
     setModal(false);
   };
+
   const removePost = (post) => {
     setPosts(posts.filter((p) => p.id !== post.id));
+  };
+
+  const changePage = (page) => {
+    setPage(page);
+    fetchPosts(limit, page);
   };
 
   return (
@@ -59,19 +69,7 @@ function App() {
           remove={removePost}
         />
       )}
-      <div className="page__wrapper">
-        {pagesArray.map((p) => {
-          return (
-            <span
-              onClick={() => setPage(p)}
-              key={p}
-              className={page === p ? "page page__current" : "page"}
-            >
-              {p}
-            </span>
-          );
-        })}
-      </div>
+      <Pagination page={page} totalPages={totalPages} changePage={changePage} />
     </div>
   );
 }
