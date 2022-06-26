@@ -6,3 +6,6 @@
   margin-top: 15px;
   padding: 15px;
 }
+.post__btns {
+  display: flex;
+}
