@@ -19,4 +19,10 @@ export class PostService {
     );
     return response;
   }
+  static async getCommentsById(id) {
+    const response = await axios.get(
+      `https://jsonplaceholder.typicode.com/posts/${id}/comments`
+    );
+    return response;
+  }
 }
