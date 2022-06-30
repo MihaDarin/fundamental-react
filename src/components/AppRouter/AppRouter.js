@@ -1,18 +1,26 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import { About } from "../../Pages/About";
-import Posts from "../../Pages/Posts";
-import { Error } from "../../Pages/Error";
-import { PostIdPage } from "../../Pages/PostIdPage";
-import { HomePage } from "../../Pages/HomePage";
+import { Navigate, Route, Routes } from "react-router-dom";
+// import { About } from "../../Pages/About";
+// import Posts from "../../Pages/Posts";
+// import { Error } from "../../Pages/Error";
+// import { PostIdPage } from "../../Pages/PostIdPage";
+// import { HomePage } from "../../Pages/HomePage";
+import { privateRoutes, publicRoutes } from "../../router/routes";
 export const AppRouter = () => {
-  return (
+  const isAuth = true;
+  return isAuth ? (
     <Routes>
-      <Route path="/about" element={<About />} />
-      <Route path="/posts" element={<Posts />} />
-      <Route path="/posts/:id" element={<PostIdPage />} />
-      <Route path="*" element={<Error />} />
-      <Route path="/" element={<HomePage />} />
+      {privateRoutes.map((route) => {
+        return <Route path={route.path} element={<route.element />} />;
+      })}
+      <Route path="/*" element={<Navigate to="/error" replace />} />
+    </Routes>
+  ) : (
+    <Routes>
+      {publicRoutes.map((route) => {
+        return <Route path={route.path} element={<route.element />} />;
+      })}
+      <Route path="/*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
 };

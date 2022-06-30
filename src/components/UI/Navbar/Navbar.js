@@ -14,6 +14,9 @@ export const Navbar = () => {
         <Link className={style.navbar__item} to="/">
           Домашняя страница
         </Link>
+        <Link className={style.navbar__item} to="/login">
+          Войти/Зарегистрироваться
+        </Link>
       </div>
     </div>
   );
