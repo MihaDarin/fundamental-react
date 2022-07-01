@@ -1,24 +1,38 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-// import { About } from "../../Pages/About";
-// import Posts from "../../Pages/Posts";
-// import { Error } from "../../Pages/Error";
-// import { PostIdPage } from "../../Pages/PostIdPage";
-// import { HomePage } from "../../Pages/HomePage";
+import { AuthContext } from "../../context/Context";
 import { privateRoutes, publicRoutes } from "../../router/routes";
+import { Loader } from "../UI/Loader/Loader";
 export const AppRouter = () => {
-  const isAuth = true;
+  const { isAuth, isLoading } = useContext(AuthContext);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return isAuth ? (
     <Routes>
       {privateRoutes.map((route) => {
-        return <Route path={route.path} element={<route.element />} />;
+        return (
+          <Route
+            path={route.path}
+            element={<route.element />}
+            key={route.path}
+          />
+        );
       })}
-      <Route path="/*" element={<Navigate to="/error" replace />} />
+      <Route path="/*" element={<Navigate to="/" replace />} />
     </Routes>
   ) : (
     <Routes>
       {publicRoutes.map((route) => {
-        return <Route path={route.path} element={<route.element />} />;
+        return (
+          <Route
+            path={route.path}
+            element={<route.element />}
+            key={route.path}
+          />
+        );
       })}
       <Route path="/*" element={<Navigate to="/login" replace />} />
     </Routes>
