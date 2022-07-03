@@ -1,5 +1,5 @@
 // import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../App.css";
 import { PostService } from "../API/PostService";
 import { useFetching } from "../hooks/UseFetching";
@@ -12,6 +12,7 @@ import { MyButton } from "../components/UI/MyButton/MyButton";
 import { MyModal } from "../components/UI/MyModal/MyModal";
 import { Pagination } from "../components/UI/Pagination/Pagination";
 import { getPagesCount } from "../utils/pages";
+import { useObserver } from "../hooks/UseObserver";
 
 function Posts() {
   const [posts, setPosts] = useState([]);
@@ -24,15 +25,19 @@ function Posts() {
   const [fetchPosts, isPostsLoading, postError] = useFetching(
     async (limit, page) => {
       const response = await PostService.getAll(limit, page);
-      setPosts(response.data);
+      setPosts([...posts, ...response.data]);
       const totalCount = response.headers["x-total-count"];
       setTotalPages(getPagesCount(totalCount, limit));
     }
   );
+  const lastElement = useRef();
+  useObserver(lastElement, page < totalPages, isPostsLoading, () => {
+    setPage(page + 1);
+  });
 
   useEffect(() => {
     fetchPosts(limit, page);
-  }, []);
+  }, [page]);
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
@@ -45,7 +50,6 @@ function Posts() {
 
   const changePage = (page) => {
     setPage(page);
-    fetchPosts(limit, page);
   };
 
   return (
@@ -59,15 +63,13 @@ function Posts() {
       <hr style={{ margin: "15px 0px" }} />
       <PostFilter filter={filter} setFilter={setFilter} />
       {postError && <h1>Произошла ошибка ${postError}</h1>}
-      {isPostsLoading ? (
-        <Loader />
-      ) : (
-        <PostList
-          posts={sortedAndSearchedPosts}
-          title="Список постов"
-          remove={removePost}
-        />
-      )}
+      <PostList
+        posts={sortedAndSearchedPosts}
+        title="Список постов"
+        remove={removePost}
+      />
+      <div ref={lastElement} style={{ height: 20, background: "red " }} />
+      {isPostsLoading && <Loader />}
       <Pagination page={page} totalPages={totalPages} changePage={changePage} />
     </div>
   );
