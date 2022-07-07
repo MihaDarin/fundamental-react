@@ -11,11 +11,3 @@
 .App {
   width: 800px;
 }
-.post {
-  display: flex;
-  padding: 15px;
-  border: 1px solid rgb(49, 62, 243);
-  margin-top: 15px;
-  justify-content: space-between;
-  align-items: center;
-}
