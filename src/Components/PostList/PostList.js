@@ -5,8 +5,8 @@ export const PostList = ({ posts, title }) => {
   return (
     <div>
       <h1 className={style.postList_title}>{title}</h1>
-      {posts.map((post) => {
-        return <Post post={post} key={post.id} />;
+      {posts.map((post, index) => {
+        return <Post number={index + 1} post={post} key={post.id} />;
       })}
     </div>
   );
