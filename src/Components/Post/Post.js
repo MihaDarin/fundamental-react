@@ -11,7 +11,9 @@ export const Post = (props) => {
         <div>{props.post.body}</div>
       </div>
       <div className="post_btns">
-        <MyButton>Удалить</MyButton>
+        <MyButton onClick={() => props.removePost(props.post)}>
+          Удалить
+        </MyButton>
       </div>
     </div>
   );
