@@ -2,7 +2,7 @@ import React from "react";
 import style from "./PostList.module.css";
 import { Post } from "../Post/Post";
 export const PostList = ({ posts, title, removePost }) => {
-  if (!posts.lenght) {
+  if (!posts.length) {
     return <h1 className="no_posts">Постов нет</h1>;
   }
   return (
