@@ -6,7 +6,7 @@ export const Post = (props) => {
     <div className={style.post}>
       <div className="post_content">
         <strong>
-          {props.number} {props.post.title}
+          {props.post.id} {props.post.title}
         </strong>
         <div>{props.post.body}</div>
       </div>
