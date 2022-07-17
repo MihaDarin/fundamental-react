@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { usePosts } from "./Components/hooks/usePosts";
 import { PostFilter } from "./Components/PostFilter/PostFilter";
@@ -12,25 +13,23 @@ import { MyModal } from "./Components/UI/MyModal/MyModal";
 // import { MyButton } from "./Components/UI/button/MyButton";
 // import { MyInput } from "./Components/UI/input/MyInput";
 function App() {
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      title: "JavaScript",
-      body: "интерфейсный программирования",
-    },
-    { id: 2, title: "Python", body: "серверный программирования" },
-    {
-      id: 3,
-      title: "Kotlin",
-      body: " я не знаю этот язык программирования",
-    },
-  ]);
+  const [posts, setPosts] = useState([]);
   const createNewPost = (newPost) => {
     setPosts([...posts, newPost]);
     setModal(false);
   };
   const [filter, setFilter] = useState({ sort: "", query: "" });
   const [modal, setModal] = useState(false);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+  async function fetchPosts() {
+    const response = await axios.get(
+      "https://jsonplaceholder.typicode.com/posts"
+    );
+    setPosts(response.data);
+  }
 
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
