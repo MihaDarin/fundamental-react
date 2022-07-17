@@ -1,17 +1,13 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import PostService from "./API/PostService";
 import "./App.css";
 import { usePosts } from "./Components/hooks/usePosts";
 import { PostFilter } from "./Components/PostFilter/PostFilter";
 import { PostForm } from "./Components/PostForm/PostForm";
-// import { Post } from "./Components/Post/Post";
 import { PostList } from "./Components/PostList/PostList";
 import { MyButton } from "./Components/UI/button/MyButton";
 import { MyModal } from "./Components/UI/MyModal/MyModal";
-// import { MyInput } from "./Components/UI/input/MyInput";
-// import { MySelect } from "./Components/UI/select/MySelect";
-// import { MyButton } from "./Components/UI/button/MyButton";
-// import { MyInput } from "./Components/UI/input/MyInput";
+
 function App() {
   const [posts, setPosts] = useState([]);
   const createNewPost = (newPost) => {
@@ -25,10 +21,8 @@ function App() {
     fetchPosts();
   }, []);
   async function fetchPosts() {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts"
-    );
-    setPosts(response.data);
+    const posts = await PostService.getAll();
+    setPosts(posts);
   }
 
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
