@@ -6,3 +6,6 @@
   justify-content: space-between;
   align-items: center;
 }
+.post_btns {
+  display: flex;
+}
