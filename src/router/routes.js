@@ -1,4 +1,3 @@
-import { Navigate } from "react-router-dom";
 import { About } from "../Components/Pages/About";
 import { ErrorPage } from "../Components/Pages/ErrorPage";
 import { HomePage } from "../Components/Pages/HomePage";
@@ -10,11 +9,7 @@ export const privateRoutes = [
   { path: "/posts", element: Posts },
   { path: "/posts:id", element: PostIdPage },
   { path: "/error", element: ErrorPage },
-  { path: "/*", element: `${(<Navigate to="/error" replace />)}` },
   { path: "/", element: HomePage },
 ];
 
-export const publicRoutes = [
-  { path: "/login", element: Login },
-  { path: "/*", element: `${(<Navigate to="/login" replace />)}` },
-];
+export const publicRoutes = [{ path: "/", element: Login }];

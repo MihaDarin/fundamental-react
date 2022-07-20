@@ -4,7 +4,6 @@ import { MyButton } from "../UI/button/MyButton";
 import style from "./Post.module.css";
 export const Post = (props) => {
   const router = useNavigate();
-  console.log(router);
   return (
     <div className={style.post}>
       <div className="post_content">
