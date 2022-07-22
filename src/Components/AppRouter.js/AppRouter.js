@@ -3,7 +3,11 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { AuthContext } from "../../context/context";
 import { privateRoutes, publicRoutes } from "../../router/routes";
 export const AppRouter = () => {
-  const { isAuth } = useContext(AuthContext);
+  const { isAuth, isLoading } = useContext(AuthContext);
+  if (isLoading) {
+    return <div></div>;
+  }
+
   return isAuth ? (
     <Routes>
       {privateRoutes.map((route) => {
